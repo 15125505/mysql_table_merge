@@ -15,7 +15,7 @@
 echo '# 需要配置的参数
 rootPassword=thisIsALongEnoughPassword
 defaultUser=green
-defaultUserPassword=token2User
+defaultUserPassword=yourPassword
 
 # 获取脚本所在的路径
 scriptDir=$(pwd)

@@ -7,7 +7,7 @@
 ``` shell
 useradd green
 passwd green
-# 输入密码 token2User
+# 输入密码
 ```
 * 为用户设置sudo权限
     * 输入visudo，找到root ALL=(ALL) ALL
@@ -31,7 +31,7 @@ cd /home/green/myDb
 
 # 创建param脚本(如果需要修改用户登录数据库的密码，可以在该脚本中修改)
 echo '# 需要配置的参数
-defaultUserPassword=token2User
+defaultUserPassword=youPassword
 
 # 获取脚本所在的路径
 scriptDir=$(pwd)
