@@ -7,11 +7,13 @@
 
 ## 二、创建对应的脚本
 
-*  使用git bash进入打算存放数据库的目录；
+* 使用git bash进入打算存放数据库的目录；
 
-*  执行以下脚本，创建param.sh
+* 执行以下脚本以创建执行脚本
 
 ``` shell
+
+# 创建param.sh
 echo '# 需要配置的参数
 rootPassword=thisIsALongEnoughPassword
 defaultUser=green
@@ -26,11 +28,8 @@ FILE=mariadb-$VERSION-winx64
 
 # 添加PATH信息
 export PATH=$PATH:$scriptDir/mariadb/$FILE/bin:$scriptDir/mariadb/$FILE/scripts' > param.sh
-```
 
-* 执行以下脚本，创建init.sh
-
-``` shell
+# 创建init.sh
 echo 'cd $(dirname $0)
 source ./param.sh
 
@@ -41,7 +40,6 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 echo "--数据库目录创建成功！"
-
 
 # 下载并解压，之后删除下载包
 wget https://mirrors.xtom.jp/mariadb/mariadb-$VERSION/winx64-packages/$FILE.zip
@@ -89,32 +87,35 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-echo "--初始化成功完成！"' >> init.sh
-
-```
-
-* 执行以下脚本，创建start.sh
+echo "--初始化成功完成！"
+read n' >> init.sh
 
 
-``` shell
+# 创建start.sh
 echo 'cd $(dirname $0)
 source ./param.sh
 
 # 开始服务
 mysqld  --defaults-file="$scriptDir/mariadb/data/my.ini" &
 echo "启动服务完成"
-' > start.sh
-```
+read n' > start.sh
 
-* 执行以下脚本，创建stop.sh
-
-``` shell
+# 创建stop.sh
 echo 'cd $(dirname $0)
 source ./param.sh
 
 # 停止服务
 mysqladmin -u$defaultUser -p$defaultUserPassword shutdown
-echo "停止服务完成"' > stop.sh
+echo "停止服务完成"
+read n' > stop.sh
+
+# 创建check.sh
+echo 'cd $(dirname $0)
+source ./param.sh
+
+# 检查服务
+mysqladmin -u$defaultUser -p$defaultUserPassword ping
+read n' > check.sh
 ```
 
 * 为脚本加入执行权限
@@ -124,9 +125,12 @@ chmod +x param.sh
 chmod +x init.sh
 chmod +x start.sh
 chmod +x stop.sh
+chmod +x check.sh
 ```
 
 ## 三、数据库的使用
 
-1. 执行start.sh，可以启动数据库服务；
-2. 执行stop.sh，可以停止数据库服务；
+1. 执行init.sh，可以完成数据库的安装和初始化；
+2. 执行start.sh，可以启动数据库服务；
+3. 执行stop.sh，可以停止数据库服务；
+4. 执行check.sh，可以检查数据库启动状态；

@@ -31,7 +31,7 @@ cd /home/green/myDb
 
 # 创建param脚本(如果需要修改用户登录数据库的密码，可以在该脚本中修改)
 echo '# 需要配置的参数
-defaultUserPassword=youPassword
+defaultUserPassword=yourPassword
 
 # 获取脚本所在的路径
 scriptDir=$(pwd)
